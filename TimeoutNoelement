@@ -1,0 +1,26 @@
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+import unittest
+
+class ExceptionTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.implicitly_wait(5)
+        cls.driver.maximize_window()
+
+    def test_nonexistent(self):
+        try:
+            self.driver.get("https://www.google.com/")
+        except TimeoutException:
+            print("Time out")
+        try:
+            self.driver.find_element_by_id("nonexistent")
+        except NoSuchElementException:
+            print("No Element")
+        finally:
+            self.driver.close()
+
+
+
